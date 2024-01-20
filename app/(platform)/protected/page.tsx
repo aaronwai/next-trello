@@ -1,12 +1,10 @@
-import { auth, currentUser } from "@clerk/nextjs";
+"use client";
 
-const ProtectedPage = async () => {
-  const user = await currentUser();
-  const { userId } = auth();
+import { UserButton } from "@clerk/nextjs";
+const ProtectedPage = () => {
   return (
     <div>
-      User : {user?.firstName}
-      userId : {userId}
+      <UserButton afterSignOutUrl='/' />
     </div>
   );
 };
