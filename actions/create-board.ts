@@ -2,16 +2,42 @@
 import { db } from "@/lib/db";
 import { z } from "zod";
 import { revalidatePath } from "next/cache";
-const CreateBoard = z.object({
-  title: z.string(),
-});
-export async function create(formData: FormData) {
-  const { title } = CreateBoard.parse({ title: formData.get("title") });
+import { redirect } from "next/navigation";
 
-  await db.board.create({
-    data: {
-      title,
-    },
+export type State = {
+  errors?: {
+    title?: string[];
+  };
+  message?: string | null;
+};
+
+const CreateBoard = z.object({
+  title: z.string().min(3, {
+    message: "Minimum length of 3 letters is required !",
+  }),
+});
+export async function create(prevState: State, formData: FormData) {
+  const validatedFields = CreateBoard.safeParse({
+    title: formData.get("title"),
   });
+  if (!validatedFields.success) {
+    return {
+      errors: validatedFields.error.flatten().fieldErrors,
+      message: "Missing fields",
+    };
+  }
+  const { title } = validatedFields.data;
+  try {
+    await db.board.create({
+      data: {
+        title,
+      },
+    });
+  } catch (error) {
+    return {
+      message: "database error",
+    };
+  }
   revalidatePath("/organization/org_2bF4TKqjqS15rlUSSYFdygDtJIE");
+  redirect("/organization/org_2bF4TKqjqS15rlUSSYFdygDtJIE");
 }
