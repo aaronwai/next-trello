@@ -4,7 +4,7 @@ import { BoardList } from "./_components/board-list";
 
 const OrganizationIdPage = async () => {
   return (
-    <div className='flex flex-col space-y-4'>
+    <div className='w-full mb-20'>
       <Info />
       <Separator className='my-4' />
       <BoardList />
