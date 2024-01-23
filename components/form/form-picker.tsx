@@ -4,6 +4,9 @@ import { useEffect, useState } from "react";
 import { useFormStatus } from "react-dom";
 import { Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import Image from "next/image";
+import { defaultImages } from "@/constants/images";
+import Link from "next/link";
 interface FormPickerProps {
   id: string;
   errors?: Record<string, string[] | undefined>;
@@ -11,7 +14,8 @@ interface FormPickerProps {
 
 export const FormPicker = ({ id, errors }: FormPickerProps) => {
   const { pending } = useFormStatus();
-  const [images, setImages] = useState<Array<Record<string, any>>>([]);
+  const [images, setImages] =
+    useState<Array<Record<string, any>>>(defaultImages);
   const [isLoading, setIsLoading] = useState(true);
   const [selectedImageId, setSelectedImageId] = useState(null);
   useEffect(() => {
@@ -29,7 +33,7 @@ export const FormPicker = ({ id, errors }: FormPickerProps) => {
         }
       } catch (error) {
         console.log(error);
-        setImages([]);
+        setImages([defaultImages]);
       } finally {
         setIsLoading(false);
       }
@@ -58,7 +62,21 @@ export const FormPicker = ({ id, errors }: FormPickerProps) => {
               if (pending) return;
               setSelectedImageId(image.id);
             }}
-          ></div>
+          >
+            <Image
+              src={image.urls.thumb}
+              alt='Unsplash image'
+              className='object-cover rounded-sm'
+              fill
+            />
+            <Link
+              href={image.links.html}
+              target='_blank'
+              className='opacity-0 group-hover:opacity-100 absolute bottom-0 w-full text-[10px] truncate text-white hover:underline p-1 bg-black/50'
+            >
+              {image.user.name}
+            </Link>
+          </div>
         ))}
       </div>
     </div>
