@@ -10,7 +10,7 @@ import { CreateBoard } from "./schema";
 const handler = async (data: InputType): Promise<ReturnType> => {
   const { userId, orgId } = auth();
 
-  if (!userId) {
+  if (!userId || !orgId) {
     return {
       error: "Unauthorized",
     };
@@ -19,7 +19,13 @@ const handler = async (data: InputType): Promise<ReturnType> => {
 
   const [imageId, imageThumbUrl, imageFullUrl, imageLinkHTML, imageUserName] =
     image.split("|");
-
+  console.log({
+    imageId,
+    imageThumbUrl,
+    imageFullUrl,
+    imageLinkHTML,
+    imageUserName,
+  });
   if (
     !imageId ||
     !imageThumbUrl ||
