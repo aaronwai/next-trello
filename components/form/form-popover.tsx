@@ -30,13 +30,13 @@ export const FormPopover = ({
   align,
   sideOffset = 0,
 }: FormPopoverProps) => {
-  const router = useRouter();
+  const router = useRouter(); // add router
   const closeRef = useRef<ElementRef<"button">>(null);
   const { execute, fieldErrors } = useAction(createBoard, {
     onSuccess: (data) => {
       toast.success("Board created!");
       closeRef.current?.click();
-      router.push(`/board/${data.id}`);
+      router.push(`/board/${data.id}`); // add redirect
     },
     onError: (error) => {
       toast.error(error);

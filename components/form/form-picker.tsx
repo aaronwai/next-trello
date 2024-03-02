@@ -2,7 +2,7 @@
 import { unsplash } from "@/lib/unsplash";
 import { useEffect, useState } from "react";
 import { useFormStatus } from "react-dom";
-import { Check, Loader2 } from "lucide-react";
+import { Check, Loader2 } from "lucide-react"; //add
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import { defaultImages } from "@/constants/images";
@@ -20,6 +20,7 @@ export const FormPicker = ({ id, errors }: FormPickerProps) => {
     useState<Array<Record<string, any>>>(defaultImages);
   const [isLoading, setIsLoading] = useState(true);
   const [selectedImageId, setSelectedImageId] = useState(null);
+
   useEffect(() => {
     const fetchImages = async () => {
       try {
@@ -27,6 +28,7 @@ export const FormPicker = ({ id, errors }: FormPickerProps) => {
           collectionIds: ["317099"],
           count: 9,
         });
+
         if (result && result.response) {
           const newImages = result.response as Array<Record<string, any>>;
           setImages(newImages);
@@ -80,6 +82,7 @@ export const FormPicker = ({ id, errors }: FormPickerProps) => {
               className='object-cover rounded-sm'
               fill
             />
+
             {selectedImageId === image.id && (
               <div className='absolute inset-y-0 h-full w-full bg-black/30 flex items-center justify-center'>
                 <Check className='h-4 w-4 text-white' />
@@ -95,6 +98,7 @@ export const FormPicker = ({ id, errors }: FormPickerProps) => {
           </div>
         ))}
       </div>
+
       <FormErrors id='image' errors={errors} />
     </div>
   );

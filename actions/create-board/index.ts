@@ -15,6 +15,7 @@ const handler = async (data: InputType): Promise<ReturnType> => {
       error: "Unauthorized",
     };
   }
+
   const { title, image } = data;
 
   const [imageId, imageThumbUrl, imageFullUrl, imageLinkHTML, imageUserName] =
@@ -24,12 +25,10 @@ const handler = async (data: InputType): Promise<ReturnType> => {
     !imageId ||
     !imageThumbUrl ||
     !imageFullUrl ||
-    !imageUserName ||
-    !imageLinkHTML
+    !imageLinkHTML ||
+    !imageUserName
   ) {
-    return {
-      error: "Missing fields. Failed to create board.",
-    };
+    return { error: "Missing fields. Failed to create board." };
   }
 
   let board;
@@ -41,8 +40,8 @@ const handler = async (data: InputType): Promise<ReturnType> => {
         imageId,
         imageThumbUrl,
         imageFullUrl,
-        imageUserName,
         imageLinkHTML,
+        imageUserName,
       },
     });
   } catch (error) {
