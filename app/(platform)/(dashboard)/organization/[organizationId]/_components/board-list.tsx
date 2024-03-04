@@ -12,7 +12,6 @@ export const BoardList = async () => {
   if (!orgId) {
     return redirect("/select-org");
   }
-
   const boards = await db.board.findMany({
     where: { orgId },
     orderBy: { createdAt: "desc" },
