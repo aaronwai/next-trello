@@ -3,6 +3,7 @@
 import { Card } from "@prisma/client";
 import { Draggable } from "@hello-pangea/dnd";
 import { useCardModal } from "@/hooks/use-card-modal";
+import { Header } from "@/components/modals/card-modal/header";
 
 interface CardItemProps {
   data: Card;
